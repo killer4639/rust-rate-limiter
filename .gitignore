@@ -1,0 +1,17 @@
+# Rust build outputs
+target/
+Cargo.lock
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+*.exe
+*.pdb
+
+# Downloaded files
+protoc-win64.zip
