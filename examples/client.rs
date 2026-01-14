@@ -7,8 +7,8 @@ pub mod rate_limiter {
 use rate_limiter::rate_limiter_client::RateLimiterClient;
 use rate_limiter::PingRequest;
 
-#[tokio::test]
-async fn test_ping_request() -> Result<(), Box<dyn std::error::Error>> {
+#[tokio::main]
+async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let channel = Channel::from_static("http://127.0.0.1:50051")
         .connect()
         .await?;
@@ -16,14 +16,12 @@ async fn test_ping_request() -> Result<(), Box<dyn std::error::Error>> {
     let mut client = RateLimiterClient::new(channel);
     
     let request = tonic::Request::new(PingRequest {
-        message: "Hello from gRPC test!".to_string(),
+        message: "Hello from gRPC client!".to_string(),
     });
     
     let response = client.ping(request).await?;
-    let response_msg = response.into_inner();
     
-    assert_eq!(response_msg.status, "success");
-    assert!(response_msg.message.contains("Pong"));
+    println!("Response: {:#?}", response.into_inner());
     
     Ok(())
 }

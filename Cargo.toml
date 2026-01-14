@@ -9,6 +9,12 @@ tonic = "0.9"
 prost = "0.11"
 tracing = "0.1"
 tracing-subscriber = "0.3"
+tonic-reflection = "0.9"
 
 [build-dependencies]
 tonic-build = "0.9"
+protoc-bin-vendored = "3.0"
+
+[[example]]
+name = "client"
+path = "examples/client.rs"

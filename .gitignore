@@ -15,3 +15,4 @@ Cargo.lock
 
 # Downloaded files
 protoc-win64.zip
+proto/descriptor.bin

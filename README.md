@@ -14,7 +14,7 @@ cargo build
 cargo run
 ```
 
-The server will start listening on `[::1]:50051` (IPv6 localhost on port 50051).
+The server will start listening on `127.0.0.1:50051` (IPv4 localhost on port 50051).
 
 ## Testing with grpcurl
 
@@ -22,19 +22,19 @@ The server will start listening on `[::1]:50051` (IPv6 localhost on port 50051).
 # Install grpcurl if not already installed
 # https://github.com/fullstorydev/grpcurl/releases
 
-# Send a ping request
-grpcurl -plaintext -d '{"message":"hello"}' [::1]:50051 rate_limiter.RateLimiter/Ping
+# Send a ping request (reflection enabled, no .proto needed)
+grpcurl -plaintext -d '{\"message\":\"hello\"}' 127.0.0.1:50051 rate_limiter.RateLimiter/Ping
 
-## Testing with the provided integration test
+## Testing with the provided example
 
-The integration test connects to the running server and verifies the `Ping` method works:
+The example client connects to the running server to demonstrate usage:
 
 ```bash
 # Terminal 1: Start the server
 cargo run
 
-# Terminal 2: Run the integration test
-cargo test --test client_integration -- --nocapture
+# Terminal 2: Run the example client
+cargo run --example client
 ```
 ```
 
@@ -43,4 +43,4 @@ cargo test --test client_integration -- --nocapture
 - `proto/` - Protocol Buffer definitions
 - `src/` - Rust source code
 - `build.rs` - Build script to compile proto files
-- `tests/` - Integration tests (run via `cargo test`)
+- `examples/` - Example client binaries (run via `cargo run --example client`)
