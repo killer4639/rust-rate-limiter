@@ -1,13 +1,13 @@
 /// Generated service definitions
 use tonic::{Request, Response, Status};
-use crate::pb::{PingRequest, PingResponse};
+use crate::pb::{RateLimitRequest, RateLimitResponse};
 
 #[tonic::async_trait]
 pub trait RateLimiter: Send + Sync + 'static {
     async fn ping(
         &self,
-        request: Request<PingRequest>,
-    ) -> Result<Response<PingResponse>, Status>;
+        request: Request<RateLimitRequest>,
+    ) -> Result<Response<RateLimitResponse>, Status>;
 }
 
 pub struct RateLimiterServer<T> {
@@ -44,7 +44,7 @@ impl<T: RateLimiter> Service<hyper::Request<BoxBody>> for RateLimiterServer<T> {
                 let body_bytes = hyper::body::to_bytes(req.into_body())
                     .await
                     .unwrap_or_default();
-                let request = PingRequest::decode(&body_bytes[..]).unwrap_or_default();
+                let request = RateLimitRequest::decode(&body_bytes[..]).unwrap_or_default();
                 
                 match inner.ping(Request::new(request)).await {
                     Ok(response) => {

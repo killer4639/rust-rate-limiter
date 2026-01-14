@@ -5,7 +5,7 @@ pub mod rate_limiter {
 }
 
 use rate_limiter::rate_limiter_client::RateLimiterClient;
-use rate_limiter::PingRequest;
+use rate_limiter::RateLimitRequest;
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
@@ -15,7 +15,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     
     let mut client = RateLimiterClient::new(channel);
     
-    let request = tonic::Request::new(PingRequest {
+    let request = tonic::Request::new(RateLimitRequest {
         message: "Hello from gRPC client!".to_string(),
     });
     

@@ -4,13 +4,13 @@
 use prost::Message;
 
 #[derive(Clone, PartialEq, ::prost::Message)]
-pub struct PingRequest {
+pub struct RateLimitRequest {
     #[prost(string, tag = "1")]
     pub message: ::prost::alloc::string::String,
 }
 
 #[derive(Clone, PartialEq, ::prost::Message)]
-pub struct PingResponse {
+pub struct RateLimitResponse {
     #[prost(string, tag = "1")]
     pub status: ::prost::alloc::string::String,
     #[prost(string, tag = "2")]
