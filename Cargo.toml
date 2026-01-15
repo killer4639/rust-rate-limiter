@@ -28,3 +28,11 @@ path = "examples/client.rs"
 [[example]]
 name = "load_test"
 path = "examples/load_test.rs"
+
+[[example]]
+name = "single_threaded_load_test"
+path = "examples/single_threaded_load_test.rs"
+
+[[example]]
+name = "loop_load_test"
+path = "examples/loop_load_test.rs"

@@ -91,4 +91,22 @@ impl ServerConfig {
     pub fn socket_addr(&self) -> String {
         format!("{}:{}", self.bind_address, self.port)
     }
+
+    pub fn url(&self) -> String {
+        format!("http://{}:{}", self.bind_address, self.port)
+    }
+}
+
+
+#[derive(Clone, Debug)]
+pub struct BasicLoadTestConfig {
+    pub iteration_count: u64
+}
+
+impl Default for BasicLoadTestConfig {
+    fn default() -> Self {
+        Self {
+            iteration_count: 1000000000
+        }
+    }
 }
