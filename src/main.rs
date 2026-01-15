@@ -1,7 +1,10 @@
 use tonic::{transport::Server};
 use tonic_reflection::server::Builder as ReflectionBuilder;
 
+mod config;
 mod rate_limiter_service;
+
+use config::ServerConfig;
 use rate_limiter_service::RateLimiterService;
 
 pub mod rate_limiter {
@@ -16,7 +19,8 @@ const DESCRIPTOR_SET: &[u8] = include_bytes!("../proto/descriptor.bin");
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
     tracing_subscriber::fmt::init();
 
-    let addr = "127.0.0.1:50051".parse()?;
+    let server_config = ServerConfig::from_env();
+    let addr = server_config.socket_addr().parse()?;
     let rate_limiter: RateLimiterService = RateLimiterService::default();
 
     let reflection = ReflectionBuilder::configure()

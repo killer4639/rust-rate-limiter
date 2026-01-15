@@ -3,6 +3,10 @@ name = "rust_rate_limiter"
 version = "0.1.0"
 edition = "2021"
 
+[lib]
+name = "rust_rate_limiter"
+path = "src/lib.rs"
+
 [dependencies]
 tokio = { version = "1", features = ["full"] }
 tonic = "0.9"
@@ -10,6 +14,7 @@ prost = "0.11"
 tracing = "0.1"
 tracing-subscriber = "0.3"
 tonic-reflection = "0.9"
+rand = "0.8"
 
 [build-dependencies]
 tonic-build = "0.9"
@@ -18,3 +23,7 @@ protoc-bin-vendored = "3.0"
 [[example]]
 name = "client"
 path = "examples/client.rs"
+
+[[example]]
+name = "load_test"
+path = "examples/load_test.rs"
