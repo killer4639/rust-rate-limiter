@@ -3,8 +3,13 @@ syntax = "proto3";
 package rate_limiter;
 
 service RateLimiter {
-  rpc Ping(RateLimitRequest) returns (RateLimitResponse) {}
+  rpc CheckRateLimit(RateLimitRequest) returns (RateLimitResponse) {}
+
+  rpc HeartBeat(HeartBeatRequest) returns (HeartBeatResponse) {}
 }
+
+message HeartBeatRequest {}
+message HeartBeatResponse {}
 
 message RateLimitRequest {
   string id = 1;

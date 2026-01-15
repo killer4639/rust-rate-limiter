@@ -11,8 +11,8 @@ pub struct LoadTestConfig {
 impl Default for LoadTestConfig {
     fn default() -> Self {
         Self {
-            num_threads: 50,
-            requests_per_thread: 100,
+            num_threads: 100,
+            requests_per_thread: 1000,
             server_url: "http://127.0.0.1:50051".to_string(),
         }
     }
@@ -21,16 +21,18 @@ impl Default for LoadTestConfig {
 impl LoadTestConfig {
     /// Load configuration from environment variables or use defaults
     pub fn from_env() -> Result<Self, Box<dyn std::error::Error>> {
+        let default_config = LoadTestConfig::default();
+
         let num_threads = env::var("THREADS")
-            .unwrap_or_else(|_| "50".to_string())
+            .unwrap_or_else(|_| default_config.num_threads.to_string())
             .parse::<usize>()?;
         
         let requests_per_thread = env::var("REQUESTS_PER_THREAD")
-            .unwrap_or_else(|_| "100".to_string())
+            .unwrap_or_else(|_| default_config.requests_per_thread.to_string())
             .parse::<usize>()?;
         
         let server_url = env::var("SERVER_URL")
-            .unwrap_or_else(|_| "http://127.0.0.1:50051".to_string());
+            .unwrap_or_else(|_| default_config.server_url.to_string());
         
         Ok(Self {
             num_threads,
@@ -70,13 +72,15 @@ impl Default for ServerConfig {
 
 impl ServerConfig {
     pub fn from_env() -> Self {
+        let default_server_config = ServerConfig::default();
+
         let bind_address = env::var("BIND_ADDRESS")
-            .unwrap_or_else(|_| "127.0.0.1".to_string());
+            .unwrap_or_else(|_| default_server_config.bind_address);
         
         let port = env::var("PORT")
-            .unwrap_or_else(|_| "50051".to_string())
+            .unwrap_or_else(|_| default_server_config.port.to_string())
             .parse::<u16>()
-            .unwrap_or(50051);
+            .unwrap_or(default_server_config.port);
         
         Self {
             bind_address,
