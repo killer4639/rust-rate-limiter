@@ -106,7 +106,7 @@ pub struct BasicLoadTestConfig {
 impl Default for BasicLoadTestConfig {
     fn default() -> Self {
         Self {
-            iteration_count: 1000000000
+            iteration_count: 100000
         }
     }
 }

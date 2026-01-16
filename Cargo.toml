@@ -36,3 +36,7 @@ path = "examples/single_threaded_load_test.rs"
 [[example]]
 name = "loop_load_test"
 path = "examples/loop_load_test.rs"
+
+[[example]]
+name = "async_load_test"
+path = "examples/async_load_test.rs"
