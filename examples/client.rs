@@ -16,10 +16,11 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let mut client = RateLimiterClient::new(channel);
     
     let request = tonic::Request::new(RateLimitRequest {
-        message: "Hello from gRPC client!".to_string(),
+        id: "1234".to_string(),
+        tokens_requested: 5,
     });
     
-    let response = client.ping(request).await?;
+    let response = client.check_rate_limit(request).await?;
     
     println!("Response: {:#?}", response.into_inner());
     
