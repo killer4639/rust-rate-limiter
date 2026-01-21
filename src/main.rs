@@ -1,4 +1,4 @@
-use tonic::{transport::Server};
+use tonic::transport::Server;
 use tonic_reflection::server::Builder as ReflectionBuilder;
 
 mod config;
@@ -15,10 +15,8 @@ use rate_limiter::rate_limiter_server::RateLimiterServer;
 
 const DESCRIPTOR_SET: &[u8] = include_bytes!("../proto/descriptor.bin");
 
-#[tokio::main]
+#[tokio::main(flavor = "multi_thread")]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
-    tracing_subscriber::fmt::init();
-
     let server_config = ServerConfig::from_env();
     let addr = server_config.socket_addr().parse()?;
     let rate_limiter: RateLimiterService = RateLimiterService::default();
@@ -27,9 +25,11 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         .register_encoded_file_descriptor_set(DESCRIPTOR_SET)
         .build()?;
 
-    tracing::info!("gRPC server listening on {}", addr);
+    println!("🚀 High-performance gRPC server listening on {}", addr);
 
     Server::builder()
+        .concurrency_limit_per_connection(5000)
+        .tcp_nodelay(true)
         .add_service(reflection)
         .add_service(RateLimiterServer::new(rate_limiter))
         .serve(addr)
